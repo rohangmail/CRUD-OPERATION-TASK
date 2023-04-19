@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProductDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblCategory">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductName" Type="Int32" />
+    <NavigationProperty Name="tblProduct" Relationship="Self.FK__tblCatego__Produ__33D4B598" FromRole="tblCategory" ToRole="tblProduct" />
+  </EntityType>
+  <EntityType Name="tblProduct">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblCategories" Relationship="Self.FK__tblCatego__Produ__33D4B598" FromRole="tblProduct" ToRole="tblCategory" />
+  </EntityType>
+  <Association Name="FK__tblCatego__Produ__33D4B598">
+    <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="0..1" />
+    <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblProduct">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="tblCategory">
+        <PropertyRef Name="ProductName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBModelss" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblCategories" EntityType="Self.tblCategory" />
+    <EntitySet Name="tblProducts" EntityType="Self.tblProduct" />
+    <AssociationSet Name="FK__tblCatego__Produ__33D4B598" Association="Self.FK__tblCatego__Produ__33D4B598">
+      <End Role="tblProduct" EntitySet="tblProducts" />
+      <End Role="tblCategory" EntitySet="tblCategories" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
